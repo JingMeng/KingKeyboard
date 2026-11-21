@@ -5,23 +5,32 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        jcenter()
+        mavenCentral()
 
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$versions.gradle"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
 //        classpath "com.novoda:bintray-release:$versions.bintrayRelease"
-        classpath "com.vanniktech:gradle-maven-publish-plugin:$versions.mavenPublish"
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$versions.dokka"
     }
 }
 
 allprojects {
+    afterEvaluate {
+        if (plugins.hasPlugin('com.android.library') || plugins.hasPlugin('com.android.application')) {
+            android.compileOptions {
+                sourceCompatibility JavaVersion.VERSION_11
+                targetCompatibility JavaVersion.VERSION_11
+            }
+        }
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+            kotlinOptions.jvmTarget = '11'
+        }
+    }
     repositories {
         google()
         mavenCentral()
-        jcenter()
+        mavenCentral()
 
     }
 }
@@ -40,4 +49,9 @@ allprojects {
         options.addStringOption('Xdoclint:none', '-quiet')
         failOnError false
     }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }

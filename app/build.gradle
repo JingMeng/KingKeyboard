@@ -5,6 +5,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    namespace 'com.king.keyboard.app'
     compileSdkVersion build_versions.compileSdk
     buildToolsVersion build_versions.buildTools
     defaultConfig {
@@ -44,3 +45,4 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraintlayout"
     implementation project(path: ':lib')
 }
+
